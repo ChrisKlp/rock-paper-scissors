@@ -49,7 +49,7 @@ const Wrapper = styled.button<{ name: string }>`
   }
 `;
 
-const InnerWrapper = styled.span<{ name: string }>`
+const InnerWrapper = styled.span<{ title: string }>`
   position: relative;
   width: 77%;
   height: 77%;
@@ -61,7 +61,7 @@ const InnerWrapper = styled.span<{ name: string }>`
   z-index: 0;
 
   img {
-    height: ${({ name }) => (name === 'rock' ? '40%' : '50%')};
+    height: ${({ title }) => (title === 'rock' ? '40%' : '50%')};
   }
 
   &::before {
@@ -90,7 +90,7 @@ const Option: React.FC<OptionProps> = ({ className, startGame, id }) => {
 
   return (
     <Wrapper className={className} name={data[id].name} onClick={handleClick}>
-      <InnerWrapper name={data[id].name}>
+      <InnerWrapper title={data[id].name}>
         <img src={data[id].icon} alt={`${data[id].name} icon`} />
       </InnerWrapper>
     </Wrapper>
