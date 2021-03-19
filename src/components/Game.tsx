@@ -6,6 +6,7 @@ import Options from './Options';
 import Results from './Results';
 import Rules from './Rules';
 import { data } from '../global/data';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const fadeOut = keyframes`
 100% {
@@ -19,25 +20,6 @@ const fadeIn = keyframes`
   opacity: 0;
   visibility: hidden;
 }
-`;
-
-const StyledOptions = styled(Options)<{ animation: string }>`
-  animation: ${({ animation }) =>
-      animation === 'options-fade-out'
-        ? fadeOut
-        : animation === 'options-fade-in'
-        ? fadeIn
-        : null}
-    0.3s ease-out;
-`;
-const StyledResults = styled(Results)<{ animation: string }>`
-  animation: ${({ animation }) =>
-      animation === 'results-fade-out'
-        ? fadeOut
-        : animation === 'results-fade-in'
-        ? fadeIn
-        : null}
-    0.3s ease-out;
 `;
 
 const Wrapper = styled.main`
@@ -110,17 +92,26 @@ const Game: React.FC<GameProps> = ({ setPoints }) => {
   return (
     <>
       <Wrapper>
-        {!game ? (
-          <StyledOptions startGame={startGame} animation={animation} />
-        ) : (
-          <StyledResults
-            player1={player1}
-            player2={player2}
-            result={result}
-            endGame={endGame}
-            animation={animation}
-          />
-        )}
+        <AnimatePresence exitBeforeEnter>
+          <motion.div
+            key={+game}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {!game ? (
+              <Options startGame={startGame} />
+            ) : (
+              <Results
+                player1={player1}
+                player2={player2}
+                result={result}
+                endGame={endGame}
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
         <RulesButton onClick={handleShowRules}>Rules</RulesButton>
       </Wrapper>
       <Rules onClick={handleShowRules} active={showRules} />

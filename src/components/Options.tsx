@@ -3,10 +3,11 @@ import Option from './Option';
 import background from '../assets/bg-pentagon.svg';
 import media from '../global/mediaQueries';
 import { data } from '../global/data';
+import { motion } from 'framer-motion';
 
 const Element = styled(Option)``;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   margin: 9.5rem auto 12.6rem;
   display: grid;
   grid-template:
@@ -70,7 +71,9 @@ type OptionsProps = {
 
 const Options: React.FC<OptionsProps> = ({ className, startGame }) => {
   return (
-    <Container className={className}>
+    <Container
+      className={className}
+    >
       {data.map((item, index) => (
         <Element key={item.name} id={index} startGame={startGame} />
       ))}

@@ -1,14 +1,8 @@
+import { motion } from 'framer-motion';
 import styled, { css, keyframes } from 'styled-components';
 import media from '../global/mediaQueries';
 import Button from './Button';
 import Option from './Option';
-
-const showIn = keyframes`
-  0% { 
-    opacity: 0;
-    transform: rotateX(-1000deg) scale(0);
-  }
-`;
 
 const winner = keyframes`
   100% {
@@ -35,7 +29,7 @@ const slideRight = keyframes`
 }
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   margin: 9.9rem auto 5.2rem;
   display: grid;
   grid-template:
@@ -122,12 +116,6 @@ const Title = styled.h3`
 const Box = styled.div<{ highlight: boolean }>`
   position: relative;
 
-  ${Wrapper} > ${Group}:nth-child(2) > & {
-    & > ${StyledOption} {
-      animation: ${showIn} 2s cubic-bezier(0.075, 0.82, 0.165, 1);
-    }
-  }
-
   &::before {
     position: absolute;
     width: 0;
@@ -213,15 +201,23 @@ const Results: React.FC<ResultsProps> = ({
       <Group>
         <Box highlight={result === 'You Lose'}>
           <Spot />
-          <StyledOption id={player2} />
+          <motion.div
+            initial={{ opacity: 0, scale: 1.5, rotateX: 1000 }}
+            animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+            transition={{ type: 'spring', duration: 2 }}
+          >
+            <StyledOption id={player2} />
+          </motion.div>
         </Box>
         <Title>The house Picked</Title>
       </Group>
       <ResultContainer>
         <Result>{result}</Result>
-        <PlayButton secondary={true} onClick={endGame}>
-          Play Again
-        </PlayButton>
+        <motion.div whileHover={{ scale: 1.05 }}>
+          <PlayButton secondary={true} onClick={endGame}>
+            Play Again
+          </PlayButton>
+        </motion.div>
       </ResultContainer>
     </Wrapper>
   );

@@ -1,8 +1,9 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { data } from '../global/data';
 import media from '../global/mediaQueries';
 
-const Wrapper = styled.button<{ name: string }>`
+const Wrapper = styled(motion.div)<{ name: string }>`
   position: relative;
   width: 9.6rem;
   height: 9.6rem;
@@ -89,7 +90,12 @@ const Option: React.FC<OptionProps> = ({ className, startGame, id }) => {
   };
 
   return (
-    <Wrapper className={className} name={data[id].name} onClick={handleClick}>
+    <Wrapper
+      className={className}
+      name={data[id].name}
+      onClick={handleClick}
+      whileHover={{ scale: 1.1 }}
+    >
       <InnerWrapper title={data[id].name}>
         <img src={data[id].icon} alt={`${data[id].name} icon`} />
       </InnerWrapper>
