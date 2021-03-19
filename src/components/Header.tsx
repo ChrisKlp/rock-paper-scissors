@@ -1,5 +1,5 @@
 import logo from '../assets/logo-bonus.svg';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import media from '../global/mediaQueries';
 import { AnimatePresence, motion } from 'framer-motion';
 

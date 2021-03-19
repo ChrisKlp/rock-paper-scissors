@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import media from '../global/mediaQueries';
 import Button from './Button';
 import Options from './Options';
@@ -8,26 +8,13 @@ import Rules from './Rules';
 import { data } from '../global/data';
 import { AnimatePresence, motion } from 'framer-motion';
 
-const fadeOut = keyframes`
-100% {
-  opacity: 0;
-  visibility: hidden;
-}
-`;
-
-const fadeIn = keyframes`
-0% {
-  opacity: 0;
-  visibility: hidden;
-}
-`;
-
 const Wrapper = styled.main`
   display: grid;
   grid-template-rows: 1fr auto;
   min-height: calc(100vh - 13.4rem);
   justify-items: center;
   align-items: start;
+  overflow: hidden;
 
   @media (${media.md}) {
     min-height: calc(100vh - 20.4rem);
@@ -54,7 +41,6 @@ const Game: React.FC<GameProps> = ({ setPoints }) => {
   const [player1, setPlayer1] = useState(0);
   const [player2, setPlayer2] = useState(0);
   const [result, setResult] = useState('');
-  const [animation, setAnimation] = useState('');
 
   const handleShowRules = () => setShowRules(prev => !prev);
 
@@ -67,13 +53,11 @@ const Game: React.FC<GameProps> = ({ setPoints }) => {
     const win = data[id].beats.includes(randomNum);
     const draw = id === randomNum;
 
-    setAnimation('options-fade-out');
 
     setTimeout(() => {
       setGame(true);
 
       setResult(win ? 'You Win' : draw ? 'Draw' : 'You Lose');
-      setAnimation('results-fade-in');
     }, 300);
 
     setTimeout(() => {
@@ -82,10 +66,8 @@ const Game: React.FC<GameProps> = ({ setPoints }) => {
   };
 
   const endGame = () => {
-    setAnimation('results-fade-out');
     setTimeout(() => {
       setGame(false);
-      setAnimation('options-fade-in');
     }, 300);
   };
 
